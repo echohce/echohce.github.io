@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-07-20T05:45:01.993Z</updated>
+  <updated>2016-08-24T18:21:10.270Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,100 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java-review</title>
+    <link href="http://yoursite.com/2016/08/25/java-review/"/>
+    <id>http://yoursite.com/2016/08/25/java-review/</id>
+    <published>2016-08-24T18:21:10.000Z</published>
+    <updated>2016-08-24T18:21:10.270Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android View事件分发机制</title>
+    <link href="http://yoursite.com/2016/07/30/Android-Touch-Event/"/>
+    <id>http://yoursite.com/2016/07/30/Android-Touch-Event/</id>
+    <published>2016-07-29T16:56:22.000Z</published>
+    <updated>2016-08-05T17:53:38.602Z</updated>
+    
+    <content type="html">&lt;p&gt;以往对Android View都没有进行好好地总结，正好校招临近，顺便复习一波View的事件分发机制&lt;/p&gt;
+&lt;h4 id=&quot;事件分发机制的概念&quot;&gt;&lt;a href=&quot;#事件分发机制的概念&quot; class=&quot;headerlink&quot; title=&quot;事件分发机制的概念&quot;&gt;&lt;/a&gt;事件分发机制的概念&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;事件分发：对MotionEvent事件的分发过程，即当一个MotionEvent产生了以后，系统需要把这个事件传递给一个具体的View，而这个传递的过程就是分发过程。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;1.1 MotionEvent&lt;/p&gt;
+&lt;p&gt;在手指接触屏幕后所产生的一系列事件中，典型的事件类型有如下几种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ACTION_DOWN  手指刚接触屏幕&lt;/li&gt;
+&lt;li&gt;ACTION_MOVE 手指在屏幕上移动&lt;/li&gt;
+&lt;li&gt;ACTION_UP 手指从屏幕上松开的一瞬间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;点击事件例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点击屏幕后离开松开，事件序列为: DOWN -&amp;gt; UP&lt;/li&gt;
+&lt;li&gt;滑动后再松开，事件序列为：DOWN-&amp;gt;MOVE-&amp;gt; ….-&amp;gt;MOVE-&amp;gt;UP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;1.2 三个重要的方法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;public boolean dispatchTouchEvent ( MotionEvent ev )   &lt;strong&gt;– 分发事件&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;用来进行事件的分发，如果事件能够传递给当前的View，那么这个方法一定会被调用，返回结果受当前View的onTouchEvent和下级View的dispatchTouchEvent方法的影响，表示是否消耗当前事件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;public boolean onInterceptTouchEvent  ( MotionEvent ev )  &lt;strong&gt;– 拦截事件&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上述方法内部调用（ViewGroup），用来判断是否拦截某个事件，如果当前View拦截了某个事件，那么在同一个事件序列当中，此方法不会被在此调用，返回结果表示是否拦截当前事件。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;public boolean onTouchEvent  ( MotionEvent ev )   &lt;strong&gt;– 消费事件&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在dispatchTouchEvent方法中进行调用，用来处理点击事件，返回结果表示是否消耗当前事件，如果不消耗，则在同一个事件序列（下次的MOVE, UP事件）中，当前View无法再次接收到事件, 此时Activity会消耗掉。&lt;/p&gt;
+&lt;div class=&quot;tip&quot;&gt;&lt;br&gt;&lt;br&gt;当一个点击事件产生后，它的传递过程遵循如下顺序：Activity-&amp;gt;Window-&amp;gt;View.&lt;br&gt;&lt;br&gt;当一个View需要处理事件时，如果设置有OnTouchListener， 那么其OnTouchListener中的Touch方法会被回调，处理的同时还要看onTouch的返回值，如果返回false, 则View的onTouchEvent方法会被调用。其次OnClickListener中的OnClick方法最后调用，优先级最低。&lt;br&gt;&lt;br&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;p&gt;1.3 探究三个方法之间的关系&lt;/p&gt;
+&lt;p&gt;根据《开发艺术》中的表述我们可以有如下伪代码：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;dispatchTouchEvent&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(MotionEvent ev)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;boolean&lt;/span&gt; consume = &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (onInterceptTouchEvent(ev)) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		consume = onTouchEvent(ev);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		consume = child.dispatchTouchEvent(ev);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; consume;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可知ViewGroup进行事件分发时候，首先通过&lt;code&gt;onInterceptTouchEvent&lt;/code&gt;判断自身是否需要进行拦截事件，如果返回&lt;code&gt;true&lt;/code&gt;就会执行自己的&lt;code&gt;onTouchEvent&lt;/code&gt;方法，否则就会事件就会传递给子View, 继续进行事件的分发。&lt;/p&gt;
+&lt;p&gt;我们再看子View中的&lt;code&gt;dispatchTouchEvent&lt;/code&gt;方法&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;dispatchTouchEvent&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(MotionEvent event)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (mOnTouchListener != &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt; &amp;amp;&amp;amp; (mViewFlags &amp;amp; ENABLED_MASK ) &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        == ENABLED &amp;amp;&amp;amp; mOnTouchListener.onTouch(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;, event)) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; onTouchEvent(event)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如前面的Tip中所述，事件分发到View的时候首先需要判断&lt;code&gt;TouchListener&lt;/code&gt;是否设置，如果有设置，并且View是&lt;code&gt;Clickable&lt;/code&gt;，就先执行&lt;code&gt;onTouch&lt;/code&gt;方法，否则执行自身的&lt;code&gt;onTouchEvent()&lt;/code&gt;方法&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;以往对Android View都没有进行好好地总结，正好校招临近，顺便复习一波View的事件分发机制&lt;/p&gt;
+&lt;h4 id=&quot;事件分发机制的概念&quot;&gt;&lt;a href=&quot;#事件分发机制的概念&quot; class=&quot;headerlink&quot; title=&quot;事件分发机制的概念&quot;&gt;&lt;/a&gt;事件分发机制的概念&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;事件分发：对MotionEvent事件的分发过程，即当一个MotionEvent产生了以后，系统需要把这个事件传递给一个具体的View，而这个传递的过程就是分发过程。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;1.1 MotionEvent&lt;/p&gt;
+&lt;p&gt;在手指接触屏幕后所产生的一系列事件中，典型的事件类型有如下几种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ACTION_DOWN  手指刚接触屏幕&lt;/li&gt;
+&lt;li&gt;ACTION_MOVE 手指在屏幕上移动&lt;/li&gt;
+&lt;li&gt;ACTION_UP 手指从屏幕上松开的一瞬间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;点击事件例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点击屏幕后离开松开，事件序列为: DOWN -&amp;gt; UP&lt;/li&gt;
+&lt;li&gt;滑动后再松开，事件序列为：DOWN-&amp;gt;MOVE-&amp;gt; ….-&amp;gt;MOVE-&amp;gt;UP&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
+    
+  </entry>
   
   <entry>
     <title>RxBus学习</title>

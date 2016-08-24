@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Android View事件分发机制 · 词不悉心</title><meta name="description" content="Android View事件分发机制 - MingJian"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="词不悉心"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/echohce" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Android View事件分发机制</h1><div class="post-info">2016年7月30日</div><div class="post-content"><p>以往对Android View都没有进行好好地总结，正好校招临近，顺便复习一波View的事件分发机制</p>
+<h4 id="事件分发机制的概念"><a href="#事件分发机制的概念" class="headerlink" title="事件分发机制的概念"></a>事件分发机制的概念</h4><blockquote>
+<p>事件分发：对MotionEvent事件的分发过程，即当一个MotionEvent产生了以后，系统需要把这个事件传递给一个具体的View，而这个传递的过程就是分发过程。</p>
+</blockquote>
+<p>1.1 MotionEvent</p>
+<p>在手指接触屏幕后所产生的一系列事件中，典型的事件类型有如下几种：</p>
+<ul>
+<li>ACTION_DOWN  手指刚接触屏幕</li>
+<li>ACTION_MOVE 手指在屏幕上移动</li>
+<li>ACTION_UP 手指从屏幕上松开的一瞬间</li>
+</ul>
+<p>点击事件例子：</p>
+<ul>
+<li>点击屏幕后离开松开，事件序列为: DOWN -&gt; UP</li>
+<li>滑动后再松开，事件序列为：DOWN-&gt;MOVE-&gt; ….-&gt;MOVE-&gt;UP</li>
+</ul>
+<a id="more"></a>
+<p>1.2 三个重要的方法：</p>
+<ul>
+<li>public boolean dispatchTouchEvent ( MotionEvent ev )   <strong>– 分发事件</strong></li>
+</ul>
+<p>用来进行事件的分发，如果事件能够传递给当前的View，那么这个方法一定会被调用，返回结果受当前View的onTouchEvent和下级View的dispatchTouchEvent方法的影响，表示是否消耗当前事件</p>
+<ul>
+<li>public boolean onInterceptTouchEvent  ( MotionEvent ev )  <strong>– 拦截事件</strong></li>
+</ul>
+<p>上述方法内部调用（ViewGroup），用来判断是否拦截某个事件，如果当前View拦截了某个事件，那么在同一个事件序列当中，此方法不会被在此调用，返回结果表示是否拦截当前事件。</p>
+<ul>
+<li>public boolean onTouchEvent  ( MotionEvent ev )   <strong>– 消费事件</strong></li>
+</ul>
+<p>在dispatchTouchEvent方法中进行调用，用来处理点击事件，返回结果表示是否消耗当前事件，如果不消耗，则在同一个事件序列（下次的MOVE, UP事件）中，当前View无法再次接收到事件, 此时Activity会消耗掉。</p>
+<div class="tip"><br><br>当一个点击事件产生后，它的传递过程遵循如下顺序：Activity-&gt;Window-&gt;View.<br><br>当一个View需要处理事件时，如果设置有OnTouchListener， 那么其OnTouchListener中的Touch方法会被回调，处理的同时还要看onTouch的返回值，如果返回false, 则View的onTouchEvent方法会被调用。其次OnClickListener中的OnClick方法最后调用，优先级最低。<br><br></div>
+
+
+
+
+
+<p>1.3 探究三个方法之间的关系</p>
+<p>根据《开发艺术》中的表述我们可以有如下伪代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent ev)</span></span>&#123;</div><div class="line">	<span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</div><div class="line">	<span class="keyword">if</span> (onInterceptTouchEvent(ev)) &#123;</div><div class="line">		consume = onTouchEvent(ev);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span>&#123;</div><div class="line">		consume = child.dispatchTouchEvent(ev);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> consume;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可知ViewGroup进行事件分发时候，首先通过<code>onInterceptTouchEvent</code>判断自身是否需要进行拦截事件，如果返回<code>true</code>就会执行自己的<code>onTouchEvent</code>方法，否则就会事件就会传递给子View, 继续进行事件的分发。</p>
+<p>我们再看子View中的<code>dispatchTouchEvent</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dispatchTouchEvent</span><span class="params">(MotionEvent event)</span></span>&#123;</div><div class="line">	<span class="keyword">if</span> (mOnTouchListener != <span class="keyword">null</span> &amp;&amp; (mViewFlags &amp; ENABLED_MASK ) </div><div class="line">        == ENABLED &amp;&amp; mOnTouchListener.onTouch(<span class="keyword">this</span>, event)) &#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> onTouchEvent(event)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如前面的Tip中所述，事件分发到View的时候首先需要判断<code>TouchListener</code>是否设置，如果有设置，并且View是<code>Clickable</code>，就先执行<code>onTouch</code>方法，否则执行自身的<code>onTouchEvent()</code>方法</p>
+</div></article></div></section><footer><div class="paginator"><a href="/2016/08/25/java-review/" class="prev">上一篇</a><a href="/2016/07/19/rxbus-learning/" class="next">下一篇</a></div><div class="copyright"><p>© 2016 <a href="http://yoursite.com">MingJian</a>, unless otherwise noted.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.6.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>

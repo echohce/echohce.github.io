@@ -1,9 +1,11 @@
 <!DOCTYPE html><html lang="zh-cn"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 设计模式之观察者模式 · 词不悉心</title><meta name="description" content="设计模式之观察者模式 - MingJian"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="词不悉心"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" type="text/css"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/echohce" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">ABOUT</a></li></ul></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">设计模式之观察者模式</h1><div class="post-info">2016年9月3日</div><div class="post-content"><p>参考资料：<a href="http://blog.csdn.net/zhengzhb/article/details/7471978" target="_blank" rel="external">23种设计模式（8）：观察者模式 - 卡奴达摩的专栏</a></p>
 <h4 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h4><p>定义：对象间一种一对多的依赖关系，使得每当一个对象改变状态，则所有依赖于它的对象都会得到通知并被自动更新。</p>
 <blockquote>
-<p>类图</p>
+<p>观察者模式类图：</p>
 </blockquote>
-<p><img src="observer.png" alt="Observer"><br><a id="more"></a><br>如上图我们可以有以下四个角色：</p>
+<a id="more"></a>
+<p><img src="observer.png" alt="Observer"></p>
+<p>如上图我们可以有以下四个角色：</p>
 <ul>
 <li><strong>被观察者</strong>: 该类有一个Vector容器用于存放观察者对象（不用List是因为多线程操作中不安全）,另外有三个方法: attach方法是向容器中添加观察者对象, detach方法是从容器中移除观察者对象，notify方法是依次调用观察者对象的对应方法。通常该类表现为抽象类比较多</li>
 <li><strong>观察者</strong>: 该对象一般是一个接口，它只有一个update方法，当被观察者状态发生变化时，这个方法会被触发</li>

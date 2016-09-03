@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-08-24T18:21:10.270Z</updated>
+  <updated>2016-09-03T09:43:02.049Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,18 +16,50 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>java-review</title>
-    <link href="http://yoursite.com/2016/08/25/java-review/"/>
-    <id>http://yoursite.com/2016/08/25/java-review/</id>
-    <published>2016-08-24T18:21:10.000Z</published>
-    <updated>2016-08-24T18:21:10.270Z</updated>
+    <title>设计模式之单例模式</title>
+    <link href="http://yoursite.com/2016/09/03/design-pattern-singleton/"/>
+    <id>http://yoursite.com/2016/09/03/design-pattern-singleton/</id>
+    <published>2016-09-03T09:36:00.000Z</published>
+    <updated>2016-09-03T09:43:02.049Z</updated>
     
-    <content type="html"></content>
+    <content type="html">&lt;p&gt;参考资料 ：&lt;a href=&quot;http://blog.csdn.net/zhengzhb/article/details/7331369&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;23种设计模式（1）：单例模式 - 卡奴达摩的专栏&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;定义：确保一个类最多只有一个实例，并提供一个全局访问点&lt;/p&gt;
+&lt;p&gt;相关要素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;私有的构造方法&lt;/li&gt;
+&lt;li&gt;指向自己实例的私有静态引用&lt;/li&gt;
+&lt;li&gt;以自己实例为返回值的静态的公有方法&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h3 id=&quot;饿汉式单例模式：&quot;&gt;&lt;a href=&quot;#饿汉式单例模式：&quot; class=&quot;headerlink&quot; title=&quot;饿汉式单例模式：&quot;&gt;&lt;/a&gt;饿汉式单例模式：&lt;/h3&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Singleton&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; Singleton singleton = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Singleton();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; Singleton &lt;span class=&quot;title&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;  singleton;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 缺点：实例已经被创建，无所谓这个类有没有用到。&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;懒汉式单例模式：&quot;&gt;&lt;a href=&quot;#懒汉式单例模式：&quot; class=&quot;headerlink&quot; title=&quot;懒汉式单例模式：&quot;&gt;&lt;/a&gt;懒汉式单例模式：&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Singleton&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; Singleton singleton;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt; Singleton &lt;span class=&quot;title&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;( singleton == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  			singleton = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Singleton();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 双重锁，比上述少耗费一些资源。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Singleton&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; Singleton singleton;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Singleton&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt;  Singleton &lt;span class=&quot;title&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  		&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;( singleton == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  			&lt;span class=&quot;keyword&quot;&gt;synchronized&lt;/span&gt;(Singleton.class)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  				&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (singleton == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  					singleton = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Singleton();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  				&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  			&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;单例模式的优点：&quot;&gt;&lt;a href=&quot;#单例模式的优点：&quot; class=&quot;headerlink&quot; title=&quot;单例模式的优点：&quot;&gt;&lt;/a&gt;单例模式的优点：&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;内存中只有一个对象，节省内存空间&lt;/li&gt;
+&lt;li&gt;全局访问&lt;/li&gt;
+&lt;li&gt;避免共享资源的多重占用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;注意事项：&quot;&gt;&lt;a href=&quot;#注意事项：&quot; class=&quot;headerlink&quot; title=&quot;注意事项：&quot;&gt;&lt;/a&gt;注意事项：&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;不要使用反射机制获得单例对象&lt;/li&gt;
+&lt;li&gt;多线程单例线程安全问题&lt;/li&gt;
+&lt;/ul&gt;
+</content>
     
     <summary type="html">
     
+      &lt;p&gt;参考资料 ：&lt;a href=&quot;http://blog.csdn.net/zhengzhb/article/details/7331369&quot;&gt;23种设计模式（1）：单例模式 - 卡奴达摩的专栏&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;定义：确保一个类最多只有一个实例，并提供一个全局访问点&lt;/p&gt;
+&lt;p&gt;相关要素：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;私有的构造方法&lt;/li&gt;
+&lt;li&gt;指向自己实例的私有静态引用&lt;/li&gt;
+&lt;li&gt;以自己实例为返回值的静态的公有方法
+    
     </summary>
     
+    
+      <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+      <category term="Design Pattern" scheme="http://yoursite.com/tags/Design-Pattern/"/>
     
   </entry>
   

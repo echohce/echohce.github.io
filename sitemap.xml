@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/09/14/day-night-mode/</loc>
+    
+    <lastmod>2016-09-14T07:59:36.549Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/09/07/bitmap-and-cache/</loc>
+    
+    <lastmod>2016-09-07T08:27:48.463Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/09/03/design-pattern-observer/</loc>
     
-    <lastmod>2016-09-03T10:27:43.156Z</lastmod>
+    <lastmod>2016-09-07T07:44:04.961Z</lastmod>
     
   </url>
   

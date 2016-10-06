@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-10-06T10:01:08.652Z</updated>
+  <updated>2016-10-06T10:03:19.610Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://yoursite.com/2016/10/06/debug-app-over-wifi/"/>
     <id>http://yoursite.com/2016/10/06/debug-app-over-wifi/</id>
     <published>2016-10-06T09:41:16.000Z</published>
-    <updated>2016-10-06T10:01:08.652Z</updated>
+    <updated>2016-10-06T10:03:19.610Z</updated>
     
     <content type="html">&lt;p&gt;近期在&lt;code&gt;Android Studio&lt;/code&gt;上安装了&lt;code&gt;ADB WIFI&lt;/code&gt;插件，发现还是不好使，因为每次连接时候需要用到&lt;code&gt;USB&lt;/code&gt;连接一次才能断开使用&lt;code&gt;wifi&lt;/code&gt;调试，最后在&lt;code&gt;segamentfault&lt;/code&gt;上找到了可以直接用&lt;code&gt;adb命令&lt;/code&gt;就可以直接通过&lt;code&gt;wifi&lt;/code&gt;连接手机进行app调试。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h4 id=&quot;第一步&quot;&gt;&lt;a href=&quot;#第一步&quot; class=&quot;headerlink&quot; title=&quot;第一步&quot;&gt;&lt;/a&gt;第一步&lt;/h4&gt;&lt;p&gt;首先需要将手机连接到跟PC同一个局域网下，通过查看信息，知道手机当前的IP地址&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;ipaddress.png&quot; alt=&quot;ipaddress&quot;&gt;&lt;/p&gt;
-&lt;h4 id=&quot;第二步&quot;&gt;&lt;a href=&quot;#第二步&quot; class=&quot;headerlink&quot; title=&quot;第二步&quot;&gt;&lt;/a&gt;第二步&lt;/h4&gt;&lt;p&gt;通过&lt;code&gt;adb connect &amp;lt; Your IP Address&amp;gt;&lt;/code&gt; 即可连接到手机&lt;/p&gt;
+&lt;h4 id=&quot;第二步&quot;&gt;&lt;a href=&quot;#第二步&quot; class=&quot;headerlink&quot; title=&quot;第二步&quot;&gt;&lt;/a&gt;第二步&lt;/h4&gt;&lt;p&gt;通过&lt;code&gt;adb connect [ Your IP Address ]&lt;/code&gt; 即可连接到手机&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;connect_over_wifi.png&quot; alt=&quot;connect_over_wifi&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Tips: 可以通过adb devices命令进行验证是否连接手机&lt;/p&gt;

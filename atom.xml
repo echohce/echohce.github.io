@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-12-14T10:55:36.324Z</updated>
+  <updated>2016-12-14T11:34:38.163Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/12/14/android-permissions/"/>
     <id>http://yoursite.com/2016/12/14/android-permissions/</id>
     <published>2016-12-14T09:39:45.000Z</published>
-    <updated>2016-12-14T10:55:36.324Z</updated>
+    <updated>2016-12-14T11:34:38.163Z</updated>
     
     <content type="html">&lt;p&gt;Android M(6.0)之后对Android的权限系统进行了修改，在6.0系统中加入了运行时权限功能。就是说用户在安装应用的时候无需授权所有权限的申请，而是在软件使用过程中进行申请。&lt;/p&gt;
 &lt;h3 id=&quot;权限类型&quot;&gt;&lt;a href=&quot;#权限类型&quot; class=&quot;headerlink&quot; title=&quot;权限类型&quot;&gt;&lt;/a&gt;权限类型&lt;/h3&gt;&lt;p&gt;新的权限策略分为两类，一类是&lt;code&gt;普通权限&lt;/code&gt;，一类是&lt;code&gt;危险权限&lt;/code&gt;。&lt;code&gt;普通权限&lt;/code&gt;是指那些不会直接威胁到用户的安全和隐私的权限，对于这部分的权限我们只需在Manifest中声明使用即可。而&lt;code&gt;危险权限&lt;/code&gt;可能会涉及到用户的隐私信息，如读取联系人信息，设备地理位置等，需要用户手动执行授权。&lt;/p&gt;
@@ -34,10 +34,14 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;ul&gt;
-&lt;li&gt;相关方法&lt;ul&gt;
-&lt;li&gt;ContextCompat.checkSelfPermission(Context context, int permission);&lt;br&gt;第一个参数是Context,第二个是相关申请的权限名（eg: Manifest.permission.CALL_PHONE）然后返回值与上述两个变量做比较用于判断结果。&lt;/li&gt;
-&lt;li&gt;ActivityCompat.requestPermissions(Activity act, String[] permissions, int requestCode);&lt;br&gt;第一个参数是Activity实例，第二个为申请权限的String数组,第三个为请求码用于结果的回调。&lt;/li&gt;
-&lt;li&gt;onRequestPermissionsResult(int requestCode, String [] permissions, int [] grantResult);&lt;br&gt;参数依次是请求码，权限数组，授权权限数组（用于与上述两常量做比较）&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;相关方法&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;ContextCompat.checkSelfPermission(Context context, int permission);&lt;br&gt;作用：检查权限是否已经授权&lt;br&gt;第一个参数是Context,第二个是相关申请的权限名（eg: Manifest.permission.CALL_PHONE）然后返回值与上述两个变量做比较用于判断结果。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ActivityCompat.requestPermissions(Activity act, String[] permissions, int requestCode);&lt;br&gt;作用：请求相关权限&lt;br&gt;第一个参数是Activity实例，第二个为申请权限的String数组,第三个为请求码用于结果的回调。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;onRequestPermissionsResult(int requestCode, String [] permissions, int [] grantResult);&lt;br&gt;作用：用于请求的回调 （Activity / Fragment中）&lt;br&gt;参数依次是请求码，权限数组，授权权限数组（用于与上述两常量做比较）&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2016/12/14/android-permissions/</loc>
+    
+    <lastmod>2016-12-14T10:55:36.324Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2016/09/03/design-pattern-singleton/</loc>
+    
+    <lastmod>2016-10-07T08:00:37.088Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/10/06/debug-app-over-wifi/</loc>
     
     <lastmod>2016-10-06T10:03:19.610Z</lastmod>
@@ -26,13 +40,6 @@
     <loc>http://yoursite.com/2016/09/03/design-pattern-observer/</loc>
     
     <lastmod>2016-09-07T07:44:04.961Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2016/09/03/design-pattern-singleton/</loc>
-    
-    <lastmod>2016-09-03T09:47:07.191Z</lastmod>
     
   </url>
   
